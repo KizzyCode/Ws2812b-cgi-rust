@@ -1,0 +1,39 @@
+[package]
+name = "ws2812b-cgi"
+version = "0.1.0"
+edition = "2021"
+authors = ["KizzyCode Software Labs./Keziah Biermann <development@kizzycode.de>"]
+keywords = []
+categories = []
+description = "A tiny CGI application which to bridge JSON update requests to a WS2812B serial driver"
+license = "BSD-2-Clause OR MIT"
+repository = "https://github.com/KizzyCode/Ws2812b-cgi-rust"
+readme = "README.md"
+
+
+[[bin]]
+name = "ws2812b"
+path = "src/main.rs"
+
+
+[badges]
+appveyor = { repository = "KizzyCode/Ws2812b-cgi-rust" }
+
+
+[features]
+default = []
+
+
+[dependencies]
+serde = { version = "1.0.150", default-features = false, features = ["derive"] }
+serde_json = { version = "1.0.103", default-features = false, features = ["std"] }
+
+[build-dependencies]
+cc = "1.0.73"
+
+
+[profile.release]
+overflow-checks = true
+
+[profile.bench]
+overflow-checks = true
