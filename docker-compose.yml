@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  nginx-cgi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8888:8080/tcp"
+    volumes:
+      # Replace ttyACM0 with your serial device
+      - /dev/ttyACM0:/dev/ws2812b.serial:rw
+    device_cgroup_rules:
+      # Replace `166:*` with the cgroup of your serial device
+      - "c 166:* rw"
