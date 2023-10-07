@@ -1,6 +1,6 @@
 FROM debian:latest AS buildenv
 
-ENV APT_PACKAGES build-essential curl
+ENV APT_PACKAGES build-essential ca-certificates curl tree
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get upgrade --yes \
