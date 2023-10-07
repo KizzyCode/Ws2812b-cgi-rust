@@ -4,7 +4,7 @@ ENV APT_PACKAGES build-essential curl
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get upgrade --yes \
-    && apt-get install --yes ${APT_PACKAGES}
+    && apt-get install --yes --no-install-recommends ${APT_PACKAGES}
 
 RUN adduser --disabled-password --uid=1000 rust
 USER rust
@@ -21,7 +21,7 @@ ENV APT_PACKAGES fcgiwrap nginx supervisor
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get upgrade --yes \
-    && apt-get install --yes ${APT_PACKAGES} \
+    && apt-get install --yes --no-install-recommends ${APT_PACKAGES} \
     && apt-get autoremove --yes \
     && apt-get clean
 
