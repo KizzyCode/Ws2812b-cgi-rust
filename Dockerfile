@@ -11,7 +11,7 @@ USER rust
 WORKDIR /home/rust/
 
 ADD --chown=rust:rust https://sh.rustup.rs rustup.sh
-RUN sh rustup.sh -y
+RUN sh rustup.sh -y --profile minimal
 COPY --chown=rust:rust ./ ws2812b.cgi/
 RUN .cargo/bin/cargo install --path=ws2812b.cgi/
 
