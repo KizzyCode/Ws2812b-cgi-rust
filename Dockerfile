@@ -1,6 +1,6 @@
 FROM debian:latest AS buildenv
 
-ENV APT_PACKAGES build-essential ca-certificates curl tree
+ENV APT_PACKAGES build-essential ca-certificates curl
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get upgrade --yes \
@@ -10,7 +10,8 @@ RUN adduser --disabled-password --uid=1000 rust
 USER rust
 WORKDIR /home/rust/
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ADD --chown=rust:rust https://sh.rustup.rs rustup.sh
+RUN sh rustup.sh -y
 COPY --chown=rust:rust ./ ws2812b.cgi/
 RUN .cargo/bin/cargo install --path=ws2812b.cgi/
 

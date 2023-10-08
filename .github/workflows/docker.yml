@@ -1,0 +1,43 @@
+name: Create and publish a Docker image
+
+on:
+  push:
+  schedule:
+    - cron: "17 17 * * *" # Run at 17:17 every day
+
+env:
+  REGISTRY: ghcr.io
+  DOCKERFILE: Dockerfile
+  IMAGE_TAG: kizzycode/ws2812b-cgi:latest
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
+      - name: Run script file
+        shell: bash  
+        run: |
+            # Exit on error
+            set -eu
+
+            # Sequentially build image for multiple platforms
+            # NOTE: If you add additional platforms here, you also need to add them to the `push`-step
+            docker buildx build --platform=linux/arm/v7 --file=Dockerfile .
+            docker buildx build --platform=linux/arm64 --file=Dockerfile .
+            docker buildx build --platform=linux/amd64 --file=Dockerfile .
+
+            # Login to docker
+            docker login "${{ env.REGISTRY }}" \
+                --username "${{ github.actor }}" --password "${{ secrets.GITHUB_TOKEN }}"
+
+            # Push image
+            docker buildx build --push --tag "${{ env.IMAGE_TAG }}" \
+                --platform linux/arm/v7,linux/arm64,linux/amd64
