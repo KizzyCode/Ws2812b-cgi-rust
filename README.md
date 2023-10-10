@@ -6,8 +6,8 @@
 # `ws2812b-cgi`
 Welcome to `ws2812b-cgi` 🎉
 This application is a tiny (CGI) application which reads a JSON array with update commands from `stdin`, translates them
-into [WS2812B driver commands](https://github.com/KizzyCode/WS2812B-rust-rp2040), and sends them to the driver's serial
-port.
+into [WS2812B driver commands](https://github.com/KizzyCode/WS2812BDriver-rust-rp2040), and sends them to the driver's
+serial port.
 
 ## Configuration
 Due to configuration limits in a CGI environment, the configuration is set during compilation via the following
