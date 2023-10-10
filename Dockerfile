@@ -26,6 +26,7 @@ RUN apt-get update \
     && apt-get autoremove --yes \
     && apt-get clean
 
+RUN usermod -u 1000 www-data
 RUN rm -rf /etc/nginx/*
 COPY ./docker/mime.types /etc/nginx/mime.types
 COPY ./docker/nginx.conf /etc/nginx/nginx.conf
